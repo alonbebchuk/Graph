@@ -129,9 +129,9 @@ public class Graph {
 
     private class NodeDLL extends DLL<Node> {
         private DLLNode<Node> getDLLNode(int nodeId) {
-            DLLNode<Node> dllNode = this.sentinel.next;
+            DLLNode<Node> dllNode = this.sentinel;
 
-            while (dllNode != this.sentinel) {
+            while ((dllNode = dllNode.next) != this.sentinel) {
                 if (dllNode.item.getId() == nodeId) {
                     return dllNode;
                 }
@@ -143,7 +143,7 @@ public class Graph {
         private Node getNode(int nodeId) {
             DLLNode<Node> dllNode = this.getDLLNode(nodeId);
 
-            return dllNode == null ? dllNode.item : null;
+            return dllNode == null ? null : dllNode.item;
         }
 
         private void delete(int nodeId) {
@@ -200,7 +200,7 @@ public class Graph {
         }
 
         private int getHashValue(int i) {
-            return ((a * i + b) % Graph.P) % m;
+            return Math.floorMod(Math.floorMod((a * i + b), Graph.P), m);
         }
 
         private void insert(Node node) {
@@ -313,6 +313,9 @@ public class Graph {
     private NodeHashTable nodes;
     private MaxNeighborhoodHeap maxNeighborhoodHeap;
 
+    public Graph() {
+    }
+
     /**
      * Initializes the graph on a given set of nodes. The created graph is empty, i.e. it has no edges.
      * You may assume that the ids of distinct nodes are distinct.
@@ -390,6 +393,8 @@ public class Graph {
             edge1to2.oppositeEdge = node2.edges.insertFirst(edge2to1);
             this.changeNeighborWeight(node2, node1.weight);
 
+            this.numEdges++;
+
             return true;
         }
     }
@@ -410,6 +415,8 @@ public class Graph {
                 neighbor = this.nodes.get(edge.neighborNodeId);
                 neighbor.edges.delete(edge.oppositeEdge);
                 this.changeNeighborWeight(neighbor, -node.getWeight());
+
+                this.numEdges--;
             }
 
             return true;
