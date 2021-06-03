@@ -89,8 +89,8 @@ public class Graph {
      * This class represents a neighborhood of a node in the graph.
      */
     private class Neighborhood {
-        private int nodeId;
         private int weight;
+        private int nodeId;
         private int heapIndex;
 
         /**
@@ -99,8 +99,8 @@ public class Graph {
          * @param node - node of neighborhood.
          */
         private Neighborhood(Node node) {
-            this.nodeId = node.getId();
             this.weight = node.getWeight();
+            this.nodeId = node.getId();
         }
     }
 
