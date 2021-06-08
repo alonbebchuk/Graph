@@ -30,7 +30,7 @@ public class Graph {
     /**
      * This class represents a node in the graph.
      */
-    public class Node {
+    public static class Node {
         private int id;
         private int weight;
         private EdgeDLL edges;
@@ -88,7 +88,7 @@ public class Graph {
     /**
      * This class represents a neighborhood of a node in the graph.
      */
-    private class Neighborhood {
+    private static class Neighborhood {
         private int weight;
         private int nodeId;
         private int heapIndex;
@@ -109,7 +109,7 @@ public class Graph {
     /**
      * This class represents a node in a doubly linked list.
      */
-    private class DLLNode<T> {
+    private static class DLLNode<T> {
         private DLLNode<T> prev;
         private T info;
         private DLLNode<T> next;
@@ -129,7 +129,7 @@ public class Graph {
     /**
      * This class represents a doubly linked list.
      */
-    private class DLL<T> {
+    private static class DLL<T> {
         protected DLLNode<T> sentinel;
         protected int length;
 
@@ -227,7 +227,7 @@ public class Graph {
     /**
      * This class represents a doubly linked list of edge objects.
      */
-    private class EdgeDLL extends DLL<Edge> implements Iterable<Edge> {
+    private static class EdgeDLL extends DLL<Edge> implements Iterable<Edge> {
         private class EdgeDLLIterator implements Iterator<Edge> {
             DLLNode<Edge> currDLLNode;
 
@@ -478,9 +478,6 @@ public class Graph {
 
     private NodeHashTable nodes;
     private MaxNeighborhoodHeap maxNeighborhoodHeap;
-
-    public Graph() {
-    }
 
     /**
      * Initializes the graph on a given set of nodes,

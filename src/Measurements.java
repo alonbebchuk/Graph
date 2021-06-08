@@ -7,11 +7,10 @@ import java.util.Set;
 
 public class Measurements {
     public static void main(String[] args) {
-        Graph empty = new Graph();
         Graph.Node[] nodes = new Graph.Node[(int) Math.pow(2, 21)];
 
         for (int j = 0; j < Math.pow(2, 21); j++) {
-            nodes[j] = empty.new Node(j + 1, 1);
+            nodes[j] = new Graph.Node(j + 1, 1);
         }
 
         for (int i = 6; i <= 21; i++) {
