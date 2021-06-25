@@ -30,7 +30,7 @@ public class Measurements {
             }
         }
 
-        IntStream.of(results).forEach(x -> System.out.println(x / numExperiments));
+        IntStream.of(results).forEach(result -> System.out.println(result / numExperiments));
     }
 
     public static Set<Pair<Integer, Integer>> generateRandomOrderedPairs(int n) {
