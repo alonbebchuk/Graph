@@ -376,11 +376,11 @@ public class Graph {
         private void swap(int i, int j) {
             Neighborhood tmp = this.heap[i];
 
+            this.heap[j].heapIndex = i;
             this.heap[i] = this.heap[j];
-            this.heap[i].heapIndex = i;
 
+            tmp.heapIndex = j;
             this.heap[j] = tmp;
-            this.heap[j].heapIndex = j;
         }
 
         /**
@@ -411,9 +411,9 @@ public class Graph {
          * @param i - index of neighborhood.
          */
         private void heapifyUp(int i) {
-            while (i > 0 && this.heap[i].weight > this.heap[i / 2].weight) {
-                this.swap(i, i / 2);
-                i = i / 2;
+            while (i > 0 && this.heap[i].weight > this.heap[(i - 1) / 2].weight) {
+                this.swap(i, (i - 1) / 2);
+                i = (i - 1) / 2;
             }
         }
 
@@ -444,18 +444,18 @@ public class Graph {
             // swap with last
             this.swap(i, this.size - 1);
 
+            // delete neighborhood from array
+            this.heap[this.size - 1] = null;
+
+            // decrement size by 1
+            this.size--;
+
             // heapify as needed
             if (replacedW > deletedW) {
                 this.heapifyUp(i);
             } else if (replacedW < deletedW) {
                 this.heapifyDown(i);
             }
-
-            // delete neighborhood from array
-            this.heap[this.size - 1] = null;
-
-            // decrement size by 1
-            this.size--;
         }
 
         /**
