@@ -26,7 +26,6 @@ public class Measurements {
                     graph.addEdge(pair.getKey(), pair.getValue());
                 }
 
-                System.out.println(graph.getNeighborhoodWeight(graph.maxNeighborhoodWeight().getId()) - 1);
                 results[i - 6] += graph.getNeighborhoodWeight(graph.maxNeighborhoodWeight().getId()) - 1;
             }
         }
