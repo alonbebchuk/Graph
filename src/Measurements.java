@@ -1,29 +1,37 @@
 import javafx.util.Pair;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class Measurements {
     public static void main(String[] args) {
-        Graph.Node[] nodes = new Graph.Node[(int) Math.pow(2, 21)];
+        int numExperiments = 5;
+        int[] results = new int[16];
 
-        for (int j = 0; j < Math.pow(2, 21); j++) {
-            nodes[j] = new Graph.Node(j + 1, 1);
-        }
+        for (int experiment = 0; experiment < numExperiments; experiment++) {
+            for (int i = 6; i <= 21; i++) {
+                int n = (int) Math.pow(2, i);
 
-        for (int i = 6; i <= 21; i++) {
-            int n = (int) Math.pow(2, i);
+                Graph.Node[] nodes = new Graph.Node[n];
 
-            Graph graph = new Graph(Arrays.copyOf(nodes, n));
+                for (int j = 0; j < n; j++) {
+                    nodes[j] = new Graph.Node(j + 1, 1);
+                }
 
-            for (Pair<Integer, Integer> pair : Measurements.generateRandomOrderedPairs(n)) {
-                graph.addEdge(pair.getKey(), pair.getValue());
+                Graph graph = new Graph(nodes);
+
+                for (Pair<Integer, Integer> pair : Measurements.generateRandomOrderedPairs(n)) {
+                    graph.addEdge(pair.getKey(), pair.getValue());
+                }
+
+                System.out.println(graph.getNeighborhoodWeight(graph.maxNeighborhoodWeight().getId()) - 1);
+                results[i - 6] += graph.getNeighborhoodWeight(graph.maxNeighborhoodWeight().getId()) - 1;
             }
-
-            System.out.println(graph.getNeighborhoodWeight(graph.maxNeighborhoodWeight().getId()) - 1);
         }
+
+        IntStream.of(results).forEach(x -> System.out.println(x / numExperiments));
     }
 
     public static Set<Pair<Integer, Integer>> generateRandomOrderedPairs(int n) {
@@ -32,10 +40,12 @@ public class Measurements {
 
         int i, j;
         while (pairs.size() < n) {
-            i = 1 + random.nextInt(n - 1);
-            j = i + 1 + random.nextInt(n - i);
+            i = random.nextInt(n);
+            j = random.nextInt(n);
 
-            pairs.add(new Pair<>(i, j));
+            if (i != j && !pairs.contains(new Pair<>(i, j)) && !pairs.contains(new Pair<>(j, i))) {
+                pairs.add(new Pair<>(i, j));
+            }
         }
 
         return pairs;
